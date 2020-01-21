@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Crypto Resources home</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            function shiftChar(char, shiftVal)
+            {
+                var currCharPos = char.charCodeAt(0) - "a".charCodeAt(0);
+                if(shiftVal !== 0)
+                {
+                    if (shiftVal > 0)
+                    {
+                        var newCharPos=(currCharPos + shiftVal) % 26;
+                        return String.fromCharCode("a".charCodeAt(0) + newCharPos);
+                    }
+                    else
+                    {
+                        var newCharPos = currCharPos + shiftVal;
+                        if (newCharPos < 0)
+                        {
+                            return String.fromCharCode("a".charCodeAt(0) + newCharPos + 26);
+                        }
+                        else
+                        {
+                            return String.fromCharCode("a".charCodeAt(0) + newCharPos);
+                        }
+                    }
+                }
+                else
+                {
+                    return char;
+                }
+            }
+
+
+            function convertString(str, shiftVal)
+            {
+                var converted = "";
+                for (var i = 0; i < str.length; i++)
+                {
+                    if(str.charAt(i) >= 'a' && str.charAt(i) <= 'z')
+                    {
+                        converted += shiftChar(str.charAt(i),shiftVal)
+                    }
+                    else
+                    {
+                        converted += str.charAt(i);
+                    }
+                }
+                return converted;
+            }
+
+            function convert2cipher()
+            {
+                var message=$("#texttoconvert").val().toLowerCase();
+                //window.alert(string2cipher(message));
+                for(var i = 1; i < 26; i++)
+                {
+                    $("#shift" + i).val(convertString(message,i));
+                }
+            }
+
+            function convert2plain()
+            {
+                var message=$("#texttoconvert").val().toLowerCase();
+                //window.alert(message);
+                for(var i = 1; i < 26; i++)
+                {
+                    //window.alert( convertString(message,i * -1) )
+                    $("#shift" + i).val(convertString(message,i * -1));
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Mono-alphabetic Shift Cipher</h1>
+        <h2>Text to shift</h2>
+        <textarea id="texttoconvert" rows="2" cols="70"></textarea>
+        <input type="button" value="Convert from Plaintext" onclick="convert2cipher()" />
+        <input type="button" value="Convert from Ciphertext" onclick="convert2plain()" />
+        <h2>Shift 1 position</h2>
+        <textarea id="shift1" rows="4" cols="70"></textarea>
+        <h2>Shift 2 positions</h2>
+        <textarea id="shift2" rows="4" cols="70"></textarea>
+        <h2>Shift 3 positions</h2>
+        <textarea id="shift3" rows="4" cols="70"></textarea>
+        <h2>Shift 4 positions</h2>
+        <textarea id="shift4" rows="4" cols="70"></textarea>
+        <h2>Shift 5 positions</h2>
+        <textarea id="shift5" rows="4" cols="70"></textarea>
+        <h2>Shift 6 positions</h2>
+        <textarea id="shift6" rows="4" cols="70"></textarea>
+        <h2>Shift 7 positions</h2>
+        <textarea id="shift7" rows="4" cols="70"></textarea>
+        <h2>Shift 8 positions</h2>
+        <textarea id="shift8" rows="4" cols="70"></textarea>
+        <h2>Shift 9 positions</h2>
+        <textarea id="shift9" rows="4" cols="70"></textarea>
+        <h2>Shift 10 positions</h2>
+        <textarea id="shift10" rows="4" cols="70"></textarea>
+        <h2>Shift 11 positions</h2>
+        <textarea id="shift11" rows="4" cols="70"></textarea>
+        <h2>Shift 12 positions</h2>
+        <textarea id="shift12" rows="4" cols="70"></textarea>
+        <h2>Shift 13 positions</h2>
+        <textarea id="shift13" rows="4" cols="70"></textarea>
+        <h2>Shift 14 positions</h2>
+        <textarea id="shift14" rows="4" cols="70"></textarea>
+        <h2>Shift 15 positions</h2>
+        <textarea id="shift15" rows="4" cols="70"></textarea>
+        <h2>Shift 16 positions</h2>
+        <textarea id="shift16" rows="4" cols="70"></textarea>
+        <h2>Shift 17 positions</h2>
+        <textarea id="shift17" rows="4" cols="70"></textarea>
+        <h2>Shift 18 positions</h2>
+        <textarea id="shift18" rows="4" cols="70"></textarea>
+        <h2>Shift 19 positions</h2>
+        <textarea id="shift19" rows="4" cols="70"></textarea>
+        <h2>Shift 20 positions</h2>
+        <textarea id="shift20" rows="4" cols="70"></textarea>
+        <h2>Shift 21 positions</h2>
+        <textarea id="shift21" rows="4" cols="70"></textarea>
+        <h2>Shift 22 positions</h2>
+        <textarea id="shift22" rows="4" cols="70"></textarea>
+        <h2>Shift 23 positions</h2>
+        <textarea id="shift23" rows="4" cols="70"></textarea>
+        <h2>Shift 24 positions</h2>
+        <textarea id="shift24" rows="4" cols="70"></textarea>
+        <h2>Shift 25 positions</h2>
+        <textarea id="shift25" rows="4" cols="70"></textarea>
+    </body>
+</html>
