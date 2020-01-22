@@ -4,12 +4,38 @@
         <title>Crypto Resources home</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="cryptoutils.js"></script>
+        <script>
+        function addFreqAnalysisData()
+        {
+            $("body").append("<h2>Frequency of English Letter Characters</h2>");
+            var freqTable = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr>";
+            //Letters go here
+            for (var i = 0; i < engCharFreq.length; i++)
+            {
+                freqTable += "<th style='border: 1px solid black; padding: 5px;'>" + engCharFreq[i][0] + "</td>";
+            }
+
+            freqTable += "</tr></thead><tr>";
+            //Frequencies go here
+            for (var i = 0; i < engCharFreq.length; i++)
+            {
+                freqTable += "<td style='border: 1px solid black; padding: 5px;'>" + engCharFreq[i][1] + "</td>";
+            }
+            freqTable += "</tr></table>";
+
+            $("body").append(freqTable);
+        }
+
+        function performAnalysis()
+        {
+            
+        }
+        </script>
     </head>
-    <body>
-        <h1>Mono-alphabetic Shift Cipher</h1>
-        <h2>Text to shift</h2>
-        <textarea id="texttoconvert" rows="2" cols="70"></textarea>
-        <input type="button" value="Convert from Plaintext" onclick="convert2cipher()" />
-        <input type="button" value="Convert from Ciphertext" onclick="convert2plain()" />
+    <body onload="addFreqAnalysisData()">
+        <h1>Mono-alphabetic Frequency Analysis</h1>
+        <h2>Text to Analyse</h2>
+        <textarea id="texttoconvert" rows="6" cols="70"></textarea><br />
+        <input type="button" value="Perform Frequency Analysis" onclick="performAnalysis()" />
     </body>
 </html>
