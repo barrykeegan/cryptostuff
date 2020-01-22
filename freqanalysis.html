@@ -102,15 +102,22 @@
             return results;
         }
 
+        function changeGuess(letter)
+        {
+            console.log(".letter" + letter);
+            console.log($("letterSubst" + letter).val());
+            $(".letter" + letter).html($("#letterSubst" + letter).val());
+        }
+
         function addBestGuessSubstitutions(results)
         {
             $("body").append("<h2>Best guess at Substitutions</h2>");
+            var dictSubst = {};
             var bestGuessTable = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr><th  style='border: 1px solid black; padding: 5px;'>Encoded Letters: </th>";
             for (var i = 0; i < results.length; i++)
             {
                 bestGuessTable += "<th style='border: 1px solid black; padding: 5px;'>";
                 bestGuessTable += String.fromCharCode( results[i][0].charCodeAt(0) - 32) ;
-                console.log(String.fromCharCode(results[i][0].charCodeAt(0)-32));
                 bestGuessTable += "</th>";
             }
 
@@ -118,13 +125,53 @@
             for (var i = 0; i < results.length; i++)
             {
                 bestGuessTable += "<td style='border: 1px solid black; padding: 5px;'>";
-                bestGuessTable += "<input size='1' type='text' value='" + engCharFreq[i][0].toLowerCase() + "'>";
+                bestGuessTable += "<input id='letterSubst" + results[i][0] +"' size='1' type='text' onchange='changeGuess(\"" + results[i][0] + "\");'"
+                //onkeypress='this.onchange();' onpaste='this.onchange();' oninput='this.onchange();'
+                bestGuessTable += "value='" + engCharFreq[i][0].toLowerCase() + "'>";
                 bestGuessTable += "</td>";
+                dictSubst[results[i][0]] = engCharFreq[i][0].toLowerCase();
             }
 
             bestGuessTable += "</tr></table>";
-
+            
             $("body").append(bestGuessTable);
+            return dictSubst;
+        }
+
+        function displayEncodedTextWithBestGuess(msg, sortedLetterFreq,dictInitialBestGuess)
+        {
+            $("body").append("<h2>Display of Encoded Text With Best Guess Substitutions</h2>");
+            var bestGuessPlain = "<table style='border: 1px solid black; border-collapse: collapse;'>"
+            var topRowStart = "<tr><th  style='border: 1px solid black; padding: 5px;'>Encoded Text: </th>";
+            var bottomRowStart = "<tr><th  style='border: 1px solid black; padding: 5px;'>Plain Text: </th>";
+            var currTopRow = topRowStart;
+            var currBottomRow = bottomRowStart;
+            var closeRow = "</tr>"
+            for (var i = 0; i < msg.length; i++)
+            {
+                if (i>0 && i%30 ===0)
+                {
+                    bestGuessPlain += currTopRow + closeRow;
+                    bestGuessPlain += currBottomRow + closeRow;
+                    currTopRow = topRowStart;
+                    currBottomRow = bottomRowStart;
+                }
+                currTopRow += "<td style='border: 1px solid black; padding: 5px;'>" + msg[i].toUpperCase() + "</td>";
+
+                if(msg[i] >= 'a' && msg[i] <= 'z')
+                {
+                    currBottomRow += "<td style='border: 1px solid black; padding: 5px;' class='letter" + msg[i] + "'>" + dictInitialBestGuess[msg[i]] + "</td>";
+                }
+                else
+                {
+                    currBottomRow += "<td style='border: 1px solid black; padding: 5px;'>" + msg[i] + "</td>";
+                }
+            }
+            bestGuessPlain += currTopRow + closeRow;
+            bestGuessPlain += currBottomRow + closeRow;
+
+            bestGuessPlain += "</table>";
+            $("body").append(bestGuessPlain);
         }
 
         function performAnalysis()
@@ -134,9 +181,8 @@
             addAnalysisResultsToPage(letterFreq);
             var sortedLetterFreq = sortResults(letterFreq);
             addSortedResultsToPage(sortedLetterFreq)
-            window.alert(sortedLetterFreq);
-            addBestGuessSubstitutions(sortedLetterFreq);
-
+            dictInitialBestGuess = addBestGuessSubstitutions(sortedLetterFreq);
+            displayEncodedTextWithBestGuess(message,sortedLetterFreq,dictInitialBestGuess);
         }
         </script>
     </head>
