@@ -50,23 +50,4 @@ function shiftChar(char, shiftVal)
                 return converted;
             }
 
-            function convert2cipher()
-            {
-                var message=$("#texttoconvert").val().toLowerCase();
-                //window.alert(string2cipher(message));
-                for(var i = 1; i < 26; i++)
-                {
-                    $("#shift" + i).val(convertString(message,i));
-                }
-            }
-
-            function convert2plain()
-            {
-                var message=$("#texttoconvert").val().toLowerCase();
-                //window.alert(message);
-                for(var i = 1; i < 26; i++)
-                {
-                    //window.alert( convertString(message,i * -1) )
-                    $("#shift" + i).val(convertString(message,i * -1));
-                }
-            }
+            
