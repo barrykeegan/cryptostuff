@@ -7,20 +7,142 @@
     <script src="encodecode.js"></script>
     <script src="cryptoutils.js"></script>
     <script>
+        var letterFreq;
+        var sortedLetterFreq;
+        var ciphertext;
+
+        function addAnalysisResultsToPage(results)
+        {
+            $("#letterFreqDisplay").append("<h2>Frequency of Letter Occurrences in Encoded Text</h2>");
+            var resultsTable = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr><th>Letters: </th>";
+            //Letters go here
+            for (var i = 0; i < results.length; i++)
+            {
+                resultsTable += "<th style='border: 1px solid black; padding: 5px;'>" + results[i][0] + "</th>";
+            }
+
+            resultsTable += "</tr></thead><tr><th>Count: </th>";
+            //Frequencies go here
+            for (var i = 0; i < results.length; i++)
+            {
+                resultsTable += "<td style='border: 1px solid black; padding: 5px;'>" + results[i][1] + "</td>";
+            }
+
+            resultsTable += "</tr><tr><th>Occurrence &percnt;: </th>";
+            //Frequencies go here
+            for (var i = 0; i < results.length; i++)
+            {
+                resultsTable += "<td style='border: 1px solid black; padding: 5px;'>" + results[i][2] + "</td>";
+            }
+            resultsTable += "</tr></table>";
+
+            $("#letterFreqDisplay").append(resultsTable);
+        }
+
+        function addSortedResultsToPage(results)
+        {
+            $("#letterFreqDisplay").append("<h2>Sorted Frequency of Letter Occurrences in Encoded Text</h2>");
+            var resultsTable = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr><th>Letters: </th>";
+            //Letters go here
+            for (var i = 0; i < results.length; i++)
+            {
+                resultsTable += "<th style='border: 1px solid black; padding: 5px;'>" + results[i][0] + "</th>";
+            }
+
+            resultsTable += "</tr></thead><tr><th>Count: </th>";
+            //Frequencies go here
+            for (var i = 0; i < results.length; i++)
+            {
+                resultsTable += "<td style='border: 1px solid black; padding: 5px;'>" + results[i][1] + "</td>";
+            }
+
+            resultsTable += "</tr><tr><th>Occurrence &percnt;: </th>";
+            //Frequencies go here
+            for (var i = 0; i < results.length; i++)
+            {
+                resultsTable += "<td style='border: 1px solid black; padding: 5px;'>" + results[i][2] + "</td>";
+            }
+            resultsTable += "</tr></table>";
+
+            $("#letterFreqDisplay").append(resultsTable);
+        }
+
+        function sortResults(results)
+        {
+            var weGoAgain = true;
+            while(weGoAgain)
+            {
+                weGoAgain = false;
+                for (var i = 0; i < results.length-1; i++)
+                {
+                    if(results[i][1] < results[i+1][1])
+                    {
+                        weGoAgain=true;
+                        t = results[i];
+                        results[i] = results[i+1]
+                        results[i+1] = t;
+                    }
+                }
+            }
+            return results;
+        }
+
         function transformCipherText()
         {
-            var ciphertext = $("#texttoanalyse").val().toUpperCase();
+            ciphertext = $("#texttoanalyse").val().toUpperCase();
             console.log(ciphertext);
             ciphertext = ciphertext.replace(/[^A-Z]/g, '');
             $("#texttoanalyse").val(ciphertext);
         }
+
+        function performAnalysis()
+        {
+            var message=ciphertext.toLowerCase();
+            letterFreq = performFreqAnalysis(message);   
+            addAnalysisResultsToPage(letterFreq);
+            sortedLetterFreq = sortResults(letterFreq);
+            addSortedResultsToPage(sortedLetterFreq)
+        }
+
+        function addFreqAnalysisData()
+        {
+            $("#standardEnglishLetterFreq").append("<h2>Frequency of English Letter Characters</h2>");
+            var freqTable = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr>";
+            //Letters go here
+            for (var i = 0; i < engCharFreq.length; i++)
+            {
+                freqTable += "<th style='border: 1px solid black; padding: 5px;'>" + engCharFreq[i][0] + "</th>";
+            }
+
+            freqTable += "</tr></thead><tr>";
+            //Frequencies go here
+            for (var i = 0; i < engCharFreq.length; i++)
+            {
+                freqTable += "<td style='border: 1px solid black; padding: 5px;'>" + engCharFreq[i][1] + "</td>";
+            }
+            freqTable += "</tr></table>";
+
+            $("#standardEnglishLetterFreq").append(freqTable);
+        }
+
+        function performICalculation()
+        {
+            var I = calculateI(letterFreq, ciphertext.length);
+            $("#ICalculationResults").append("<em><strong>I</strong></em> is: " + I);
+        }
     </script>
   </head>
-  <body onload="">
+  <body onload="addFreqAnalysisData()">
     <h1>Poly-alphabetic / Vigenere Utilities</h1>
     <h2>Cipher Text to Analyse</h2>
     <textarea id="texttoanalyse" rows="6" cols="70"></textarea><br />
     <input type="button" value="Remove Spaces and change to Upper Case" onclick="transformCipherText()" />
     <input type="button" value="Perform Frequency Analysis" onclick="performAnalysis()" />
+    <div id="standardEnglishLetterFreq"></div>
+    <div id="letterFreqDisplay"></div>
+    <div id="ICalculationResults">
+        <h2>Calculate <em>I</em> of ciphertext</h2>
+        <input type="button" value="Perform I calculation" onclick="performICalculation()" />
+    </div>
 </body>
 </html>   

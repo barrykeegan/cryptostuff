@@ -80,4 +80,17 @@ function performFreqAnalysis(msg)
     return letterFreq;
 }
 
-            
+function calculateI(letterFreq, length)
+{
+    var numerator = 0;
+    for(var i = 0; i<letterFreq.length; i++)
+    {
+        if(letterFreq[i][1] > 1)
+        {
+            numerator += letterFreq[i][1] * (letterFreq[i][1] -1);
+        }
+    }
+    var denominator = length * (length-1);
+    I = numerator / denominator;
+    return I;
+}            
