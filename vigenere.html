@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Encoding and Decoding Tools for Various Cyphers</title>
+    <title>Poly-alphabetic Analysis Tools</title>
     <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="encodecode.js"></script>
     <script src="cryptoutils.js"></script>
+    <script>
+        function transformCipherText()
+        {
+            var ciphertext = $("#texttoanalyse").val().toUpperCase();
+            console.log(ciphertext);
+            ciphertext = ciphertext.replace(/[^A-Z]/g, '');
+            $("#texttoanalyse").val(ciphertext);
+        }
+    </script>
   </head>
+  <body onload="">
+    <h1>Poly-alphabetic / Vigenere Utilities</h1>
+    <h2>Cipher Text to Analyse</h2>
+    <textarea id="texttoanalyse" rows="6" cols="70"></textarea><br />
+    <input type="button" value="Remove Spaces and change to Upper Case" onclick="transformCipherText()" />
+    <input type="button" value="Perform Frequency Analysis" onclick="performAnalysis()" />
+</body>
 </html>   
