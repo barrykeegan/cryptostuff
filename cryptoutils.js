@@ -93,4 +93,11 @@ function calculateI(letterFreq, length)
     var denominator = length * (length-1);
     I = numerator / denominator;
     return I;
-}            
+} 
+
+function estimateKeyLength(len)
+{
+    var keyLenghtEstimate = 0.027*len;
+    keyLenghtEstimate /= (len -1)*0.044 + 0.065 - 0.038*len;
+    return keyLenghtEstimate;
+}
