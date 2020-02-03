@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Poly-alphabetic Analysis Tools</title>
@@ -108,22 +108,38 @@
         function addFreqAnalysisData()
         {
             $("#standardEnglishLetterFreq").append("<h2>Frequency of English Letter Characters</h2>");
-            var freqTable = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr>";
+            var tableStart = "<table style='border: 1px solid black; border-collapse: collapse;'><thead><tr>";
+            var thCellStart = "<th style='border: 1px solid black; padding: 5px;'>";
+            var thCellEnd = "</th>";
+            var tdCellStart = "<td style='border: 1px solid black; padding: 5px;'>";
+            var tdCellEnd = "</td>";
+            var freqTable = tableStart;
             //Letters go here
             for (var i = 0; i < engCharFreq.length; i++)
             {
-                freqTable += "<th style='border: 1px solid black; padding: 5px;'>" + engCharFreq[i][0] + "</th>";
+                freqTable += thCellStart + engCharFreq[i][0] + thCellEnd;
             }
 
             freqTable += "</tr></thead><tr>";
             //Frequencies go here
             for (var i = 0; i < engCharFreq.length; i++)
             {
-                freqTable += "<td style='border: 1px solid black; padding: 5px;'>" + engCharFreq[i][1] + "</td>";
+                freqTable += tdCellStart + engCharFreq[i][1] + tdCellEnd;
             }
             freqTable += "</tr></table>";
 
             $("#standardEnglishLetterFreq").append(freqTable);
+
+            var bigramFreqTable, bigramFreqTableTopRow, bigramFreqTableBottomRow;
+            var trigramFreqTable, trigramFreqTableTopRow, trigramFreqTableBottomRow;
+            var quadrigramFreqTable, quadrigramFreqTableTopRow, quadrigramFreqTableBottomRow;
+            bigramFreqTable = tableStart;
+            trigramFreqTable = tableStart;
+            quadrigramFreqTable = tableStart;
+            for (var i = 0; i < biGramFreq.length; i++)
+            {
+
+            }
         }
 
         function performICalculation()
@@ -139,16 +155,36 @@
     </script>
   </head>
   <body onload="addFreqAnalysisData()">
-    <h1>Poly-alphabetic / Vigenere Utilities</h1>
-    <h2>Cipher Text to Analyse</h2>
-    <textarea id="texttoanalyse" rows="6" cols="70"></textarea><br />
-    <input type="button" value="Remove Spaces and change to Upper Case" onclick="transformCipherText()" />
-    <input type="button" value="Perform Frequency Analysis" onclick="performAnalysis()" />
-    <div id="standardEnglishLetterFreq"></div>
-    <div id="letterFreqDisplay"></div>
-    <div id="ICalculationResults">
-        <h2>Calculate <em>I</em> of ciphertext</h2>
-        <input type="button" value="Perform I calculation" onclick="performICalculation()" />
-    </div>
-</body>
+      <h1>Poly-alphabetic / Vigenere Utilities</h1>
+      <h2>Cipher Text to Analyse</h2>
+      <textarea id="texttoanalyse" rows="6" cols="70"></textarea><br />
+      <input type="button" value="Remove Spaces and change to Upper Case" onclick="transformCipherText()" />
+      <input type="button" value="Perform Frequency Analysis" onclick="performAnalysis()" />
+      <div id="standardEnglishLetterFreq"></div>
+      <div id="letterFreqDisplay"></div>
+      <div id="bigramAnalysis">
+          <h2>Common bigram Frequencies</h2>
+          <div id="commonBigrams"></div>
+          <input type="button" value="Perform Bigram Analysis" onclick="performBigramAnalysis()" />
+          <div id="bigramAnalysisResults">
+
+          </div>
+      </div>
+      <div id="trigramAnalysis">
+          <h2>Common Trigram Frequencies</h2>
+          <div id="commonTrigrams"></div>
+          <input type="button" value="Perform Trigram Analysis" onclick="performTrigramAnalysis()" />
+          <div id="trigramAnalysisResults">
+
+          </div>
+      </div>
+      <div id="quadrigramAnalysis">
+          <h2>Common Quadrigram Frequencies</h2>
+          <div id="commonQuadrigrams"></div>
+          <input type="button" value="Perform Quadrigram Analysis" onclick="performQuadrigramAnalysis()" />
+          <div id="quadrigramAnalysisResults">
+
+          </div>
+      </div>
+  </body>
 </html>   
